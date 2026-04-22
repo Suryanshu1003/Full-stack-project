@@ -1,7 +1,7 @@
 const USERS = [
-    { name: "Yukti Sharma", email: "yukti@company.com", pass: "123456", role: "User" },
+    { name: "Shubham", email: "shubham@company.com", pass: "123456", role: "User" },
     { name: "Manav Sharma", email: "manav@company.com", pass: "123456", role: "User" },
-    { name: "Ansh Kaushik", email: "ansh@company.com", pass: "123456", role: "Admin" }
+    { name: "Suryanshu", email: "suryanshu@company.com", pass: "123456", role: "Admin" }
 ];
 
 let currentUser = null;
