@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise OS | Production</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loginPage" class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo-sq">OS</div>
+                <h1>System Login</h1>
+            </div>
+            <div class="auth-form">
+                <div class="input-field">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="name@company.com">
+                </div>
+                <div class="input-field">
+                    <label>Password</label>
+                    <input type="password" id="loginPass" placeholder="••••••••">
+                </div>
+                <button id="loginBtn" class="btn-primary-wide">Sign In</button>
+                <div id="loginError" class="error-msg"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboardPage" class="dashboard-wrapper hidden">
+        <aside class="sidebar">
+            <div class="profile-section">
+                <div class="profile-pic" id="userInitials"></div>
+                <div class="profile-meta">
+                    <h2 id="userNameDisplay"></h2>
+                    <p id="userRoleDisplay"></p>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <button class="nav-btn active" data-view="view-dashboard">Dashboard</button>
+                <button class="nav-btn" data-view="view-projects">Projects</button>
+                <button class="nav-btn" data-view="view-tasks">Tasks</button>
+                <button class="nav-btn" id="logoutBtn">Logout</button>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="search-wrapper">
+                    <input type="text" placeholder="Search objectives...">
+                </div>
+                <div class="header-actions">
+                    <button class="btn-ai" id="askAiBtn">Ask AI</button>
+                    <button class="btn-plus" id="openTaskModal">+</button>
+                </div>
+            </header>
+
+            <div id="view-dashboard" class="portal-view">
+                <section class="metrics-grid">
+                    <div class="metric-card">
+                        <span class="m-label">Assigned Objectives</span>
+                        <div class="m-val" id="totalTasksCount">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <span class="m-label">Efficiency</span>
+                        <div class="m-val">84%</div>
+                    </div>
+                </section>
+                <div class="content-layout">
+                    <div class="task-board">
+                        <h3>Quick Tasks</h3>
+                        <div id="dashboardTaskContainer" class="task-list"></div>
+                    </div>
+                    <div class="ai-side-panel">
+                        <div class="ai-card">
+                            <div class="ai-card-header">AI Assistant</div>
+                            <div id="aiResponseArea" class="ai-chat-body"></div>
+                            <div class="ai-input-group">
+                                <input type="text" id="aiQuery" placeholder="Ask AI...">
+                                <button id="sendAiQuery">Query</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-projects" class="portal-view hidden">
+                <div class="view-header">
+                    <h2>Project Timeline</h2>
+                </div>
+                <div class="calendar-container card">
+                    <div class="calendar-header">
+                        <span id="calendarMonth">Month Year</span>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="day-label">Sun</div><div class="day-label">Mon</div><div class="day-label">Tue</div>
+                        <div class="day-label">Wed</div><div class="day-label">Thu</div><div class="day-label">Fri</div>
+                        <div class="day-label">Sat</div>
+                    </div>
+                    <div id="calendarDays" class="calendar-grid days"></div>
+                </div>
+            </div>
+
+            <div id="view-tasks" class="portal-view hidden">
+                <div class="view-header">
+                    <h2>Central Task Portal</h2>
+                </div>
+                <div class="card">
+                    <div id="fullTaskContainer" class="task-list"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="taskModal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>New Assignment</h3>
+                <button class="close-modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-field">
+                    <label>Title</label>
+                    <input type="text" id="taskTitle">
+                </div>
+                <div class="input-field">
+                    <label>Description</label>
+                    <textarea id="taskDesc" rows="3"></textarea>
+                </div>
+                <div class="input-field">
+                    <label>Assign To</label>
+                    <select id="taskAssignee">
+                        <option value="yukti@company.com">Yukti Sharma</option>
+                        <option value="manav@company.com">Manav Sharma</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label>Deadline</label>
+                    <input type="date" id="taskDeadline">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="saveTaskBtn">Assign</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="detailModal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="detailTitle"></h3>
+                <button class="close-modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Assigned To:</strong> <span id="detailAssignee"></span></p>
+                <p><strong>Deadline:</strong> <span id="detailDeadline"></span></p>
+                <hr>
+                <p><strong>Description:</strong></p>
+                <p id="detailDesc"></p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
